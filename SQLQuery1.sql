@@ -3,11 +3,14 @@ CREATE DATABASE furnitureShop
 
 USE furnitureShop
 
+
 CREATE TABLE ClientTitle
 (
 	CT_ID int identity(01,1) PRIMARY KEY NOT NULL,
 	Title VARCHAR(5)
 )
+
+--DROP TABLE Client
 
 CREATE TABLE Client
 (
@@ -16,7 +19,7 @@ CREATE TABLE Client
 	Surname VARCHAR(255) NOT NULL,
 	IDNum int NOT NULL,
 	
-	(CT_ID) INT REFERENCES ClientTitle(CT_ID) NOT NULL
+	CT_ID INT REFERENCES ClientTitle(CT_ID) NOT NULL
 )
 
 CREATE TABLE FurnitureType
@@ -30,7 +33,7 @@ CREATE TABLE Furniture
 	F_ID int identity(1,1) PRIMARY KEY NOT NULL,
 	F_Name VARCHAR(255),
 	Quantity int,
-	(F_ID) INT REFERENCES FurnitureType(F_ID)
+	FT_ID INT REFERENCES FurnitureType(FT_ID)
 )
 
 INSERT INTO ClientTitle(Title)
@@ -42,7 +45,7 @@ VALUES ('Musa','Mathe', 0897856, 1)
 INSERT INTO FurnitureType(Furn_Type)
 VALUES ('Kitchen'), ('Living Room')
 
-INSERT INTO Furniture(F_Name, Quantity, F_ID)
+INSERT INTO Furniture(F_Name, Quantity, FT_ID)
 VALUES ('Lounge table', 18, 1)
 
 SELECT * FROM ClientTitle
