@@ -208,6 +208,113 @@ namespace MiniProject
                     Response.Write("Client surname updated");
                 }
             }
+            
         }
+        
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            using (furnitureShopEntities1 context = new furnitureShopEntities1())
+            {
+                string name = txtFurnitureName.Text;
+                int quantity = Convert.ToInt32(txtQuantity.Text);
+                Furniture furniture = new Furniture
+                {
+                    F_Name = name,
+                    Quantity = quantity
+                };
+                Furniture furnitureDB = context.Furnitures.FirstOrDefault(r => r.F_Name == furniture.F_Name);
+                if (furnitureDB != null)
+                {
+
+                    try
+                    {
+                        context.Furnitures.Add(furniture);
+                        context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Response.Write(ex);
+                    }
+                    Response.Write("Furniture succesfully saved.");
+                }
+                else
+                {
+                    Response.Write("Cannot add furniture again.");
+                }
+            }
+        }
+
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+            using (furnitureShopEntities1 context = new furnitureShopEntities1())
+            {
+                string furnitureName = txtUpdateFurnitureName.Text;
+                int quantity =Convert.ToInt32(txtUpdateQuantity.Text);
+                Furniture furniture = context.Furnitures.FirstOrDefault(r => r.F_Name == furnitureName);
+                if(furniture == null)
+                {
+                    Response.Write("Furniture not found");
+                }
+                else
+                {
+                    furniture.Quantity = quantity;
+                    context.SaveChanges();
+                    Response.Write("Furniture quantity updated succesfully");
+                }
+            }
+
+        }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            using (furnitureShopEntities1 context = new furnitureShopEntities1())
+            {
+                string furnitureName = txtDeleteFurnitureName.Text;
+                Furniture furniture = context.Furnitures.FirstOrDefault(r => r.F_Name == furnitureName);
+                if (furniture != null)
+                {
+                    context.Furnitures.Remove(furniture);
+                    context.SaveChanges();
+                    Response.Write(furnitureName + " has been removed");
+                }
+                else
+                {
+                    Response.Write("Furniture does not exist");
+                }
+            }
+        }
+
+        protected void Button9_Click(object sender, EventArgs e)
+        {
+            using (furnitureShopEntities1 context = new furnitureShopEntities1())
+            {
+                string furnitureName = txtSearchName.Text;
+                Furniture furniture = context.Furnitures.FirstOrDefault(r => r.F_Name == furnitureName);
+                if (furniture != null)
+                {
+                    Response.Write(furniture.F_Name + " " + furniture.Quantity);
+                }
+                else
+                {
+                    Response.Write(furnitureName + " does not exist in the list.");
+                }
+            }
+        }
+
+        protected void Button10_Click(object sender, EventArgs e)
+        {
+            using (furnitureShopEntities1 context = new furnitureShopEntities1())
+            {
+                var Furniture = context.Furnitures.Select(r => new { FN = r.F_Name + " " + r.Quantity + "=>" });
+                foreach(var x in Furniture)
+                {
+                    Response.Write(x.FN);
+                }
+            }
+        }
+
+        
+        
+        
     }
 }
