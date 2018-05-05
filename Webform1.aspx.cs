@@ -17,6 +17,7 @@ namespace MiniProject
 
             using (furnitureShopEntities1 context = new furnitureShopEntities1())
             {
+                //Populating Title
                 ClientTitle c = new ClientTitle();
 
                 List<ClientTitle> type = context.ClientTitles.ToList();
@@ -33,7 +34,8 @@ namespace MiniProject
                 DropDownList2.DataSource = typeFurniture;
                 DropDownList2.DataTextField = "Furn_Type";
                 DropDownList2.DataValueField = "FT_ID";
-                DropDownList2.DataBind();
+                if (!IsPostBack)//Gets the selected value if postback will not
++                    DropDownList1.DataBind();
 
             }
         }
